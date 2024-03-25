@@ -40,7 +40,19 @@
         <h1 class="text-center mt-5">Gender Prediction</h1>
         <div class="form-group mt-5 font-weight-bold" style="font-size: 20px;">
             <label for="text-input">Enter Text</label>
-            <input type="text" id="text-input" class="form-control" placeholder="Enter text...">
+
+            <textarea type="text" id="text-input" rows="4" class="form-control" placeholder="Enter text..."></textarea>
+            
+        </div>
+
+        <div class="form-group mt-3">
+            <label for="preselected-text">Select Predefined Text</label>
+            <select id="preselected-text" class="form-control" onchange="updateTextInput()">
+                <option value="">Select an option</option>
+                <option value="You absolutely can be! My assigned gender at birth is male, but I never cared about presenting myself as masculine to others. In fact, I try to gravitate to a more neutral position on the gender spectrum. That being said, there are days where I do feel more masculine or feminine and my presentation will vary based on that. So to answer your question, the decision is ultimately up to you whether you choose to use non-binary as an identifier, but know that you could definitely fit under the term should you choose to use it 😊">You absolutely can be! My assigned gender at birth is male, but I never cared about presenting myself as masculine to others ...</option>
+                <option value="Damn you might want to get your anger and insecurity in check, dude.  You're attracted to your girl, right? If yes, can you blame other men for being attracted?  Unless a guy is a threat, or being outright disrespectful to me or my wife, I don't give a damn about looking.">Damn you might want to get your anger and insecurity in check, dude.  You're attracted to your girl, right? If yes, ...</option>
+                <option value="No, most often I find the self proclaimed nice guys are the biggest red flag.  'Bad boys' can be problematic in other ways (and occasionally similar ways)"> No, most often I find the self proclaimed nice guys are the biggest red flag ...</option>
+            </select>
         </div>
         <button id="submit-btn" class="btn btn-primary">Submit</button>
         
@@ -133,6 +145,11 @@
             $('.container .progress-bar-male').css('width', maleProgress + '%').attr('aria-valuenow', maleProgress).text(maleProgress.toFixed(2) + '%');
             $('.container .progress-bar-female').css('width', femaleProgress + '%').attr('aria-valuenow', femaleProgress).text(femaleProgress.toFixed(2) + '%');
             $('.container .progress-bar-nonbinary').css('width', nonbinaryProgress + '%').attr('aria-valuenow', nonbinaryProgress).text(nonbinaryProgress.toFixed(2) + '%');
+        }
+
+        function updateTextInput() {
+            var selectedText = document.getElementById('preselected-text').value;
+            document.getElementById('text-input').value = selectedText;
         }
     </script>
 </body>
