@@ -10,10 +10,10 @@
         .progress {
             margin-bottom: 20px;
         }
-        .progress-bar-male {
+        .progress-bar-male, .progress-bar-umale {
             background-color: #007bff; 
         }
-        .progress-bar-female {
+        .progress-bar-female, .progress-bar-ufemale {
             background-color: #f81894;
         }
         .progress-bar-nonbinary {
@@ -54,6 +54,7 @@
                 <option value="No, most often I find the self proclaimed nice guys are the biggest red flag.  'Bad boys' can be problematic in other ways (and occasionally similar ways)"> No, most often I find the self proclaimed nice guys are the biggest red flag ...</option>
             </select>
         </div>
+        
         <button id="submit-btn" class="btn btn-primary">Submit</button>
         
         <div class="divider">
@@ -63,52 +64,96 @@
                 </div>
             </div>
         </div>
-        
-        <div class="row mt-3">
-            <div class="col">
-                <div class="row">
-                    <div class="col-1">
-                        <div class="progress-label">Male</div>
-                    </div>
-                    <div class="col-11">
-                        <div class="progress" style="height: 30px;">
-                            <div class="progress-bar progress-bar-male" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="row">
-            <div class="col">
-                <div class="row">
-                    <div class="col-1">
-                        <div class="progress-label">Female</div>
-                    </div>
-                    <div class="col-11">
-                        <div class="progress" style="height: 30px;">
-                            <div class="progress-bar progress-bar-female" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            <div class="col-6">
+                <div class="col prediction font-weight-bold" style="font-size:20px;">
+                    BERT
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="progress-label">Male</div>
+                            </div>
+                            <div class="col-10">
+                                <div class="progress" style="height: 30px;">
+                                    <div class="progress-bar progress-bar-male" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col">
                 <div class="row">
-                    <div class="col-1">
-                        <div class="progress-label">Nonbinary</div>
-                    </div>
-                    <div class="col-11">
-                        <div class="progress" style="height: 30px;">
-                            <div class="progress-bar progress-bar-nonbinary" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="progress-label">Female</div>
+                            </div>
+                            <div class="col-10">
+                                <div class="progress" style="height: 30px;">
+                                    <div class="progress-bar progress-bar-female" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="progress-label">Nonbinary</div>
+                            </div>
+                            <div class="col-10">
+                                <div class="progress" style="height: 30px;">
+                                    <div class="progress-bar progress-bar-nonbinary" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+
+            </div>
+            <div class="col-6">
+                <div class="col prediction font-weight-bold" style="font-size:20px;">
+                    uClassify
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="progress-label">Male</div>
+                            </div>
+                            <div class="col-10">
+                                <div class="progress" style="height: 30px;">
+                                    <div class="progress-bar progress-bar-umale" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="progress-label">Female</div>
+                            </div>
+                            <div class="col-10">
+                                <div class="progress" style="height: 30px;">
+                                    <div class="progress-bar progress-bar-ufemale" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-
     </div>
 
     <!-- Bootstrap JS and jQuery -->
@@ -134,17 +179,22 @@
                 var maleProgress = data.male;
                 var femaleProgress = data.female;
                 var nonbinaryProgress = data.nonbinary;
-                updateProgressBars(maleProgress, femaleProgress, nonbinaryProgress);
+                var uMaleProgress = data.uClassify_male;
+                var uFemaleProgress = data.uClassify_female
+                updateProgressBars(maleProgress, femaleProgress, nonbinaryProgress, uMaleProgress, uFemaleProgress);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
         });
 
-        function updateProgressBars(maleProgress, femaleProgress, nonbinaryProgress) {
+        function updateProgressBars(maleProgress, femaleProgress, nonbinaryProgress, uMaleProgress, uFemaleProgress) {
             $('.container .progress-bar-male').css('width', maleProgress + '%').attr('aria-valuenow', maleProgress).text(maleProgress.toFixed(2) + '%');
             $('.container .progress-bar-female').css('width', femaleProgress + '%').attr('aria-valuenow', femaleProgress).text(femaleProgress.toFixed(2) + '%');
             $('.container .progress-bar-nonbinary').css('width', nonbinaryProgress + '%').attr('aria-valuenow', nonbinaryProgress).text(nonbinaryProgress.toFixed(2) + '%');
+            
+            $('.container .progress-bar-umale').css('width', uMaleProgress + '%').attr('aria-valuenow', uMaleProgress).text(uMaleProgress.toFixed(2) + '%');
+            $('.container .progress-bar-ufemale').css('width', uFemaleProgress + '%').attr('aria-valuenow', uFemaleProgress).text(uFemaleProgress.toFixed(2) + '%');
         }
 
         function updateTextInput() {
