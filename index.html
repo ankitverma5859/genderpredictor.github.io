@@ -51,12 +51,25 @@
                 <option value="">Select an option</option>
                 <option value="You absolutely can be! My assigned gender at birth is male, but I never cared about presenting myself as masculine to others. In fact, I try to gravitate to a more neutral position on the gender spectrum. That being said, there are days where I do feel more masculine or feminine and my presentation will vary based on that. So to answer your question, the decision is ultimately up to you whether you choose to use non-binary as an identifier, but know that you could definitely fit under the term should you choose to use it 😊">You absolutely can be! My assigned gender at birth is male, but I never cared about presenting myself as masculine to others ...</option>
                 <option value="Damn you might want to get your anger and insecurity in check, dude.  You're attracted to your girl, right? If yes, can you blame other men for being attracted?  Unless a guy is a threat, or being outright disrespectful to me or my wife, I don't give a damn about looking.">Damn you might want to get your anger and insecurity in check, dude.  You're attracted to your girl, right? If yes, ...</option>
-                <option value="No, most often I find the self proclaimed nice guys are the biggest red flag.  'Bad boys' can be problematic in other ways (and occasionally similar ways)"> No, most often I find the self proclaimed nice guys are the biggest red flag ...</option>
+                <option value="No, most often I find the self proclaimed nice guys are the biggest red flag. 'Bad boys' can be problematic in other ways (and occasionally similar ways)"> No, most often I find the self proclaimed nice guys are the biggest red flag 'Bad boys' can be problematic in other ...</option>
+                <option value="Got up, went to the loo, had a cup of tea, played with and fed the cats, went back to bed and had a snuggle with boyfriend, got up again, had breakfast and medication, phoned my mum, had a shower, got dressed and now I’m going out to my parents’ house for lunch.">Got up, went to the loo, had a cup of tea, played with and fed the cats, went back to bed and had a snuggle with boyfriend ...</option>
+                <option value="I dropped out when I was 16. I had heavy mental trauma (not from bullying, but domestic violence) I was convinced I was stupid and thus got into working minimum wage jobs. I thought no women would ever love me, that I was worthless. Then I moved and got into a better paying field. I met my wife, to whom I have been married going on 6 years. I suffer from terrible depression... but it could be much worse.">I dropped out when I was 16. I had heavy mental trauma (not from bullying, but domestic violence) I was convinced I was ...</option>
+                <option value="As long as you don't fully identify 100% as woman you can still be nonbinary. It's an umbrella for all identities that aren't fully binary after all, you don't have to be super androgynous or anything to be allowed to use the label :) There are also people who identify as nonbinary women/men and that's valid too!  If you wanna look into some more feminine-leaning nonbinary identities, looking up the labels demigirl/-woman and librawoman could be a good starting point.">As long as you don't fully identify 100% as woman you can still be nonbinary. It's an umbrella for all identities that aren't ...</option>
+                <option value="When I changed my name after I first came out I chose a gendered name. It has become a unisex name since then though. Just because you’re nonbinary doesn’t mean you have to walk a line down the middle of the gender binary. You already have a name you like, why mess up a good thing? You get to be whoever you are, we don’t have to try to be the purple in between the pink and blue if that’s not what colour we really are, there’s a whole damn rainbow out there for us and pink and blue are both parts of the rainbow we can pick from to figure out what feels right for ourselves.">When I changed my name after I first came out I chose a gendered name. It has become a unisex name since then though. Just because ...</option>
+                <option value="IMO you should stay (assuming your wife gets the job).  Moving is expensive and very disruptive.  Especially for your 7th grader.  Consider the costs of selling your house, new drapes and other furnishings, etc. as well as the actual cost of the move.  And your current house is paid off but in Cincy you might have a mortgage.  Also with your youngest heading into kindergarten it seems like a good time for your wife to return to the workforce.">IMO you should stay (assuming your wife gets the job).  Moving is expensive and very disruptive.  Especially for your 7th grader.  Consider ...</option> 
             </select>
         </div>
         
         <button id="submit-btn" class="btn btn-primary">Submit</button>
         
+        <div class="divider">
+            <div class="row">
+                <div class="col prediction font-weight-bold" style="font-size:20px;">
+                    Actual Label : 
+                </div>
+            </div>
+        </div>
+
         <div class="divider">
             <div class="row">
                 <div class="col prediction font-weight-bold" style="font-size:20px;">
@@ -68,7 +81,7 @@
         <div class="row">
             <div class="col-6">
                 <div class="col prediction font-weight-bold" style="font-size:20px;">
-                    BERT
+                    OUR PROPOSED MODEL
                 </div>
 
                 <div class="row mt-3">
@@ -119,7 +132,7 @@
             </div>
             <div class="col-6">
                 <div class="col prediction font-weight-bold" style="font-size:20px;">
-                    uClassify
+                    uClassify <i>(commercial model)</i>
                 </div>
 
                 <div class="row mt-3">
@@ -163,6 +176,43 @@
 
     <script>
         document.getElementById('submit-btn').addEventListener('click', function () {
+            
+            var selectedText = document.getElementById('preselected-text').value;
+            var customText = document.getElementById('text-input').value;
+            var actualLabel = '';
+
+            // Check if the selected text matches the default option and if there's no custom text
+            if (selectedText != customText) {
+                actualLabel = ''; 
+            } else if (selectedText !== "") {
+                // Update actual label based on selected text
+                if (selectedText.includes("You absolutely can be")) {
+                    actualLabel = 'NonBinary';
+                } else if (selectedText.includes("Damn you might want to get your anger")) {
+                    actualLabel = 'Male'; // Change this to the appropriate label
+                } else if (selectedText.includes("No, most often I find the self proclaimed")) {
+                    actualLabel = 'Female'; // Change this to the appropriate label
+                } else if (selectedText.includes("Got up, went to the loo,")){
+                    actualLabel = 'Female'
+                } else if (selectedText.includes("I dropped out when I was 16")){
+                    actualLabel = 'Male'
+                } else if (selectedText.includes("As long as you don't fully identify 100% as woman")){
+                    actualLabel = 'NonBinary'
+                } else if (selectedText.includes("When I changed my name after I first came out")){
+                    actualLabel = 'NonBinary'
+                } else if (selectedText.includes("IMO you should stay")){
+                    actualLabel = 'Male'
+                }
+                else {
+                    actualLabel = ''; // No matching condition, set actual label to empty string
+                }
+            } else {
+                // Custom text is entered, actual label should not have any value
+                actualLabel = '';
+            }
+
+            // Update the actual label element
+            document.querySelector('.divider .prediction').textContent = 'Actual Label: ' + actualLabel;
             var text = document.getElementById('text-input').value;
             
             // Make REST request
@@ -201,6 +251,9 @@
             var selectedText = document.getElementById('preselected-text').value;
             document.getElementById('text-input').value = selectedText;
         }
+
+        
+
     </script>
 </body>
 </html>
